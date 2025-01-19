@@ -3,16 +3,21 @@ import MapComponent from "./components/MapComponent";
 import MissionModal from "./components/MissionModal";
 import InitialModal from "./components/InitialModal";
 import { calculateDistances } from "./utils/utils";
+
 const App = () => {
   const [coordinates, setCoordinates] = useState([]);
   const [distances, setDistances] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
   const [drawingMode, setDrawingMode] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
   const [initialModalOpen, setInitialModalOpen] = useState(false);
 
   const handleCoordinatesUpdate = (newCoordinates) => {
-    setCoordinates(newCoordinates);
-    setDistances(calculateDistances(newCoordinates));
+    const isPolygon = drawingMode === "Polygon";
+
+    const flattenedCoordinates = isPolygon ? newCoordinates[0] : newCoordinates;
+
+    setCoordinates(flattenedCoordinates);
+    setDistances(calculateDistances(flattenedCoordinates, isPolygon));
     setModalOpen(true);
   };
 

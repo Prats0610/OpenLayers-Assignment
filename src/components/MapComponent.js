@@ -19,7 +19,6 @@ const MapComponent = ({
   const drawInteractionRef = useRef(null);
 
   useEffect(() => {
-    // Initialize the map
     const mapInstance = new Map({
       target: mapRef.current,
       layers: [
@@ -40,7 +39,7 @@ const MapComponent = ({
     return () => {
       mapInstance.setTarget(null);
     };
-  }, []);
+  }, [vectorSource]);
 
   useEffect(() => {
     if (map && drawingMode) {
@@ -87,7 +86,7 @@ const MapComponent = ({
         }
       };
     }
-  }, [map, drawingMode]);
+  }, [map, drawingMode, vectorSource, onCoordinatesUpdate, resetDrawingMode]);
 
   return <div ref={mapRef} style={{ width: "100%", height: "500px" }} />;
 };
